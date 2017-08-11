@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="board_head.jsp" %>
+<jsp:include page="board_head.jsp" />
 	<div id="board_list">
 		<table border=1>
 			<tr class="tr_height">
@@ -53,4 +53,4 @@
 			</tr>
 		</table>
 	</div>
-<%@ include file="../common/footer.jsp" %>
+<jsp:include page="../common/footer.jsp" />

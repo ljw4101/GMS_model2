@@ -11,16 +11,14 @@ import com.gms.web.constant.Action;
 import com.gms.web.util.DispatcherServlet;
 import com.gms.web.util.Separator;
 
-
-@WebServlet("/grade.do")
-public class GradeController extends HttpServlet {
+@WebServlet("/board.do")
+public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Separator.init(request);
 		
-		System.out.println("GradeController 진입");
+		System.out.println("BoardController 진입");
 		System.out.println(request.getParameter(Action.CMD));
 		
 		switch(request.getParameter(Action.CMD)){
@@ -38,4 +36,5 @@ public class GradeController extends HttpServlet {
 			break;
 		}
 	}
+
 }

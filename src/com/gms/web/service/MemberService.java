@@ -1,6 +1,6 @@
 package com.gms.web.service;
 
-import java.util.List;
+import java.util.*;
 import com.gms.web.domain.MemberBean;
 
 public interface MemberService {
@@ -14,5 +14,5 @@ public interface MemberService {
 	public MemberBean findByID(String id);
 	public List<MemberBean> findByName(String name);
 	
-	public String login(MemberBean member); //(패스워드)은닉화를 위해 bean으로 담음
+	public Map<String, Object> login(MemberBean member); //(패스워드)은닉화를 위해 bean으로 담음
 }

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="member_head.jsp" %>
+
+<jsp:include page="../common/common_head.jsp" />
 	<div id=join_container class="margin-auto">
-		<form id="join_form" action="<%=request.getContextPath()%>/member/service_add.jsp" class="with-100pro">
+		<form id="join_form" action="${ctx}/member/service_add.jsp" class="with-100pro">
 		<fieldset>
 		<legend>Personal information:</legend>
 		<span>ID: </span>
@@ -47,4 +48,4 @@
 		<input type="reset" value="취소" class="gms-background-red join-button" />
 		</form>
 	</div>
-<%@ include file="../common/footer.jsp" %>
+<jsp:include page="../common/footer.jsp" />

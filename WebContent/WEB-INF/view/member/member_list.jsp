@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.*" %>
-<%@ include file="member_head.jsp" %>
 
+<jsp:include page="../common/common_head.jsp" />
 	<div id="container">
 		<table id="memlist-tab">
 			<tr>
@@ -17,21 +15,19 @@
 				<th>RegDate</th>
 				<th>수정/삭제</th>
 			</tr>
-		
 			<tr>
 				<td></td>
 				<td></td>
 				<td></td>
-				<td><a href="<%=request.getContextPath()%>/member/member_detail.jsp?id="></a></td>
+				<td><a href="${ctx}/member/member_detail.jsp?id="></a></td>
 				<td></td>
 				<td></td>
 				<td>A</td>
 				<td></td>
 				<td></td>
-				<td><a href="<%=request.getContextPath()%>/member/member_update.jsp?id=">수정</a>
-					<a href="<%=request.getContextPath()%>/member/service_delete.jsp?id=">삭제</a></td>
+				<td><a href="${ctx}/member/member_update.jsp?id=">수정</a>
+					<a href="${ctx}/member/service_delete.jsp?id=">삭제</a></td>
 			</tr>
-
 		</table>
 	</div>
-<%@ include file="../common/footer.jsp" %>
+<jsp:include page="../common/footer.jsp" />

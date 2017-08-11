@@ -19,7 +19,7 @@ public class DB {
 	//코딩시 상수풀을 검색할 필요가 없으니 빨라짐.
 	//오타, 실수 예방
 	public static final String TABLE_MEMBER="member";
-	public static final String MEM_ID="id";
+	public static final String MEM_ID="mem_id";
 	public static final String MEM_NAME="name";
 	public static final String MEM_PW="pw";
 	public static final String MEM_SSN="ssn";

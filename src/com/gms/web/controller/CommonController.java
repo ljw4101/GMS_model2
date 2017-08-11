@@ -1,11 +1,15 @@
 package com.gms.web.controller;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.gms.web.constant.Action;
 import com.gms.web.domain.MemberBean;
 import com.gms.web.service.MemberServiceImpl;
@@ -17,10 +21,14 @@ import com.gms.web.util.Separator;
 public class CommonController extends HttpServlet {	//지시전달(메뉴얼대로 움직임)
 	private static final long serialVersionUID = 1L;
        
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("CommonController get 진입");
+	//doGet, doPost 상관없이 동시에 처리함
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		MemberBean member = new MemberBean();
 		Separator.init(request);
+		
+		System.out.println("CommonController 진입");
+		System.out.println(request.getParameter(Action.CMD));
 		
 		switch(request.getParameter(Action.CMD)){
 		case Action.MOVE:
@@ -30,25 +38,26 @@ public class CommonController extends HttpServlet {	//지시전달(메뉴얼대�
 			MemberBean bean = new MemberBean();
 			bean.setId(request.getParameter("id"));
 			bean.setPw(request.getParameter("pw"));
-			String result = MemberServiceImpl.getInstance().login(bean);
 			
-			Separator.cmd.setPage(result);
+			Map<String, Object> map = MemberServiceImpl.getInstance().login(bean);
+			
+			if(map.get("page").equals("main")){ //******
+				session.setAttribute("user", map.get("user"));
+			}
+			
+			Separator.cmd.setPage(String.valueOf(map.get("page")));
 			Separator.cmd.process();
 			
 			DispatcherServlet.send(request, response);
 			break;
-		case "update":
-			break;
-		case "delete":
+		case Action.LOGOUT:
+			session.invalidate();
+			
+			DispatcherServlet.send(request, response);
 			break;
 		default:
 			DispatcherServlet.send(request, response);
 			break;
 		}
 	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
 }

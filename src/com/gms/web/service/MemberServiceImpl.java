@@ -1,7 +1,10 @@
 package com.gms.web.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.gms.web.dao.MemberDAO;
 import com.gms.web.dao.MemberDAOImpl;
 import com.gms.web.domain.MemberBean;
@@ -66,9 +69,15 @@ public class MemberServiceImpl implements MemberService{
 		return msg;
 	}
 	@Override
-	public String login(MemberBean member) {	
-		MemberBean find = findByID(member.getId());
-	
-		return (find!=null)?(find.getPw().equals(member.getPw()))?"main":"login_fail":"join";
+	public Map<String, Object> login(MemberBean member) {	
+		Map<String, Object> map = new HashMap<>();
+		MemberBean m = findByID(member.getId());
+		
+		String page = (m!=null)?(m.getPw().equals(member.getPw()))?"main":"login_fail":"join";
+		
+		map.put("page", page);
+		map.put("user", m);
+		
+		return map;
 	}
 }

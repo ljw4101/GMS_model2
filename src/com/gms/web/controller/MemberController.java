@@ -2,34 +2,37 @@ package com.gms.web.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.gms.web.constant.Action;
 import com.gms.web.util.DispatcherServlet;
 import com.gms.web.util.Separator;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
 
 @WebServlet("/member.do")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("MemberController get 진입");
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Separator.init(request);
 		
-		switch(request.getParameter("action")){
-		case "move":
+		System.out.println("MemberController 진입");
+		System.out.println(request.getParameter(Action.CMD));
+		
+		switch(request.getParameter(Action.CMD)){
+		case Action.MOVE:
 			DispatcherServlet.send(request, response);
 			break;
-		case "insert":
+		case Action.INSERT:
 			break;
-		case "update":
+		case Action.UPDATE:
 			break;
-		case "delete":
+		case Action.DELETE:
 			break;
 		default:
 			DispatcherServlet.send(request, response);
@@ -37,9 +40,5 @@ public class MemberController extends HttpServlet {
 		}
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Do Post 진입");
-	}
 
 }

@@ -6,7 +6,7 @@
 	//new를 사용하지 않고 동적으로 로딩하면 DriverManager를 사용가능하다.	894p
 	Connection conn = DriverManager.getConnection(DB.ORACLE_URL, DB.USERNAME, DB.PASSWORD);
 	Statement stmt = conn.createStatement();
-	String sql="SELECT * FROM member WHERE id='kang'";
+	String sql="SELECT * FROM member WHERE mem_id='kang'";
 	ResultSet rs = stmt.executeQuery(sql);
 	
 	String findName="";

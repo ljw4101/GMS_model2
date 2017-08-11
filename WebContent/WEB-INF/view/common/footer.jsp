@@ -4,7 +4,7 @@
 		<div>
 			<p>Posted by: Hanbit</p>
 		  	<p>Contact information: <a href="mailto:someone@example.com">someone@hanbit.com</a>.</p>
-		  	<a href="util/jdbc_test.jsp">DB연결 테스트</a>&nbsp
+		  	<a href="jdbc_test.jsp">DB연결 테스트</a>
 		  	<a href="util/update_email.jsp">email Update</a>
 		</div>
 	</footer>

@@ -13,6 +13,7 @@ public class CommandFactory {
 		switch(action){
 		case Action.MOVE:
 		case Action.LOGIN:
+		case Action.LOGOUT:
 			cmd = new MoveCommand(dir, action, page); //다형성
 			break;
 		default:

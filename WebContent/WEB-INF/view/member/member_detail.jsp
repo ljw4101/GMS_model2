@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
-<%@ include file="member_head.jsp" %>
+
+<jsp:include page="../common/common_head.jsp" />
 	
 	<div id="container">
 		<table id="member_detail_tab">
 			<tr>
-				<td colspan="2" rowspan="3"><img src="<%=request.getContextPath() %>/img/" alt="" /></td>
+				<td colspan="2" rowspan="3"><img src="${ctx}/img/" alt="" /></td>
 				<th class="detail_th">이름</th>
 				<td></td>
 			</tr>
@@ -53,4 +53,4 @@
 		location.href="<%=request.getContextPath()%>/member/member_update.jsp?id=";
 	}
 </script>
-<%@ include file="../common/footer.jsp" %>
+<jsp:include page="../common/footer.jsp" />

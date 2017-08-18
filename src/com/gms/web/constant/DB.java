@@ -20,16 +20,28 @@ public class DB {
 	//오타, 실수 예방
 	public static final String TABLE_MEMBER="member";
 	public static final String MEM_ID="mem_id";
-	public static final String MEM_NAME="name";
+	public static final String NAME="name";
 	public static final String MEM_PW="pw";
-	public static final String MEM_SSN="ssn";
-	public static final String MEM_REGDATE="regdate";
+	public static final String SSN="ssn";
+	public static final String REGDATE="regdate";
+	public static final String PHONE="phone";
+	public static final String EMAIL="email";
+	public static final String MEM_PROFILE="profile";
 	
 	public static final String TABLE_BOARD="board";
 	public static final String BO_SEQ="article_seq";
 	public static final String BO_ID="id";
-	public static final String BO_TITLE="title";
+	public static final String TITLE="title";
 	public static final String BO_CONTENT="content";
 	public static final String BO_HITCOUNT="hitcount";
 	public static final String BO_REGDATE="regdate";
+	
+	public static final String TABLE_MAJOR="major";
+	public static final String MAJOR_ID="major_id";
+	public static final String SUBJ_ID="subj_id";
+
+	public static final String TABLE_STUD="v_stud";
+	public static final String NUM="num";
+	public static final String ID="id";
+
 }

@@ -3,41 +3,41 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
+      <a class="navbar-brand" href="#">LEEJIWON</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a onclick="moveTo('common','main')"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+      <li id="go_main" class="active"><a onclick="goMain('common','main')"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
       <li class="dropdown">
       	 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
       	 <span class="center">회원관리</span></a>
-      	 <ul class="dropdown-menu">
-      	 	<li><a onclick="moveTo('member', 'member_add')">학생 추가</a></li>
-      	 	<li><a onclick="moveTo('member', 'member_list')">학생 목록</a></li>
-      	 	<li><a onclick="moveTo('member', 'member_search')">학생 조회</a></li>
-      	 	<li role="separator" class="divider"></li>
-      	 	<li><a onclick="deleteTarget('member')">학생 삭제</a></li>
+      	 <ul id="nab_ul_stu">
+      	 	<li><a>학생 추가</a></li>
+      	 	<li><a>학생 목록</a></li>
+      	 	<li><a>학생 조회</a></li>
+      	 	<li></li>
+      	 	<li><a>학생 삭제</a></li>
       	 </ul>	
       </li>
       <li class="dropdown">
       	 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
       	 <span class="center">성적관리</span></a>
-      	 <ul class="dropdown-menu">
-      	 	<li><a onclick="moveTo('grade', 'grade_add')">성적 추가</a></li>
-      	 	<li><a onclick="moveTo('grade', 'grade_list')">성적 목록</a></li>
-      	 	<li><a onclick="moveTo('grade', 'grade_detail')">성적 조회</a></li>
-      	 	<li role="separator" class="divider"></li>
-      	 	<li><a onclick="deleteTarget('grade')">성적 삭제</a></li>
+      	 <ul id="nab_ul_grade">
+      	 	<li><a>성적 추가</a></li>
+      	 	<li><a>성적 목록</a></li>
+      	 	<li><a>성적 조회</a></li>
+      	 	<li></li>
+      	 	<li><a>성적 삭제</a></li>
       	 </ul>	
       </li>
       <li class="dropdown">
       	 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
       	 <span class="center">게시판관리</span></a>
-      	 <ul class="dropdown-menu">
-      	 	<li><a onclick="moveTo('board', 'board_write')">게시판 추가</a></li>
-      	 	<li><a onclick="moveTo('board', 'board_list')">게시판 목록</a></li>
-      	 	<li><a onclick="moveTo('board', 'board_detail')">게시판 조회</a></li>
-      	 	<li role="separator" class="divider"></li>
-      	 	<li><a onclick="deleteTarget('board')">게시판 삭제</a></li>
+      	 <ul id="nab_ul_board">
+      	 	<li><a>게시판 추가</a></li>
+      	 	<li><a>게시판 목록</a></li>
+      	 	<li><a>게시판 조회</a></li>
+      	 	<li></li>
+      	 	<li><a>게시판 삭제</a></li>
       	 </ul>	
       </li>
     </ul>
@@ -50,22 +50,103 @@
 		logout.href = "${ctx}/common.do?action=logout&page=index";
 		return true;	
 	}
-	
-	function moveTo(servlet, page){
-		location.href='${ctx}/'+servlet+'.do?action=move&page='+page;
+
+	function moveTo(dir, action, page){
+		location.href='${ctx}/'+dir+'.do?action='+action+'&page='+page;
 	}
 	
-	function deleteTarget(flag){
-		var msg;
+	function goMain(dir, page){
+		location.href='${ctx}/'+dir+'.do?action=move&page='+page;
+	}
+	
+	function deleteTarget(target){
+		var person = prompt(target+'의 ID?');
+	}
+	
+	function navbarLoad(){
+		var nvb1 = document.getElementById("nab_ul_stu");
+		var nvb2 = document.getElementById("nab_ul_grade");
+		var nvb3 = document.getElementById("nab_ul_board");
+
+		nvb1.setAttribute("class", "dropdown-menu");
+		nvb2.setAttribute("class", "dropdown-menu");
+		nvb3.setAttribute("class", "dropdown-menu");
 		
-		if(flag == "member"){
-			msg = "삭제할 학생 ID를 입력하세요";
-		}else if(flag == "grade"){
-			msg = "삭제할 성적 ID를 입력하세요";
-		}else if(flag == "board"){
-			msg = "삭제할 게시글 번호를 입력하세요";
+		var ul_stu = nvb1.children;
+		var ul_grade = nvb2.children;
+		var ul_board = nvb3.children;
+		
+		ul_stu[0].setAttribute("onclick", "moveTo('member', 'move', 'member_add')");
+		ul_stu[1].setAttribute("onclick", "list('member', 'member_list', '1')");
+		ul_stu[2].setAttribute("onclick", "moveTo('member', 'move', 'member_search')");
+		ul_stu[3].setAttribute("role", "separator");
+		ul_stu[3].setAttribute("class", "divider");
+		ul_stu[4].setAttribute("onclick", "deleteTarget('member')");
+
+		ul_grade[0].setAttribute("onclick", "moveTo('grade', 'move', 'grade_add')");
+		ul_grade[1].setAttribute("onclick", "list('grade', 'grade_list', '1')");
+		ul_grade[2].setAttribute("onclick", "moveTo('grade', 'move', 'grade_detail')");
+		ul_grade[3].setAttribute("role", "separator");
+		ul_grade[3].setAttribute("class", "divider");
+		ul_grade[4].setAttribute("onclick", "deleteTarget('grade')");
+
+		ul_board[0].setAttribute("onclick", "moveTo('board', 'move', 'board_write')");
+		ul_board[1].setAttribute("onclick", "list('board', 'board_list', '1')");
+		ul_board[2].setAttribute("onclick", "moveTo('board', 'move', 'board_detail')");
+		ul_board[3].setAttribute("role", "separator");
+		ul_board[3].setAttribute("class", "divider");
+		ul_board[4].setAttribute("onclick", "deleteTarget('board')");	
+	} 
+	
+	
+	//넘기는 page에 data를 보내야 되므로(DB접속 필요) move(단순 페이지 이동)와 다르다
+	function list(dir, page, pageNum){
+		location.href='${ctx}/'+dir+'.do?action=list&page='+page+'&pageNum='+pageNum;	
+	}
+	
+	//main.jsp
+	function mainLoad(){ 
+		var u1 = document.getElementById("main_ul_stu");
+		var u2 = document.getElementById("main_ul_grade");
+		var u3 = document.getElementById("main_ul_board");
+		
+		u1.setAttribute("class", "list-group");
+		u2.setAttribute("class", "list-group");
+		u3.setAttribute("class", "list-group");
+		
+		var ul_stu = u1.children;
+		var ul_grade = u2.children;
+		var ul_board = u3.children;
+		var i;
+		
+		for(i=0; i<ul_stu.length; i++){
+			ul_stu[i].setAttribute("class","list-group-item");
 		}
+		for(i=0; i<ul_grade.length; i++){
+			ul_grade[i].setAttribute("class","list-group-item");
+		}
+		for(i=0; i<ul_board.length; i++){
+			ul_board[i].setAttribute("class","list-group-item");
+		}	
 		
-		var person = prompt(msg);
+		ul_stu[0].setAttribute("onclick", "moveTo('member', 'move', 'member_add')");
+		ul_stu[1].setAttribute("onclick", "list('member', 'member_list', '1')");
+		ul_stu[2].setAttribute("onclick", "moveTo('member', 'move', 'member_search')");
+		ul_stu[3].setAttribute("onclick", "moveTo('member', 'move', 'member_update')");
+		ul_stu[4].setAttribute("onclick", "deleteTarget('member')");
+		
+		ul_grade[0].setAttribute("onclick", "moveTo('grade', 'move', 'grade_add')");
+		ul_grade[1].setAttribute("onclick", "list('grade', 'grade_list', '1')");
+		ul_grade[2].setAttribute("onclick", "moveTo('grade', 'move', 'grade_detail')");
+		ul_grade[3].setAttribute("onclick", "moveTo('grade', 'move', 'grade_update')");
+		ul_grade[4].setAttribute("onclick", "deleteTarget('grade')");
+		
+		ul_board[0].setAttribute("onclick", "moveTo('board', 'move', 'board_write')");
+		ul_board[1].setAttribute("onclick", "list('board', 'board_list', '1')");
+		ul_board[2].setAttribute("onclick", "moveTo('board', 'move', 'board_detail')");
+		ul_board[3].setAttribute("onclick", "moveTo('board', 'move', 'board_update')");
+		ul_board[4].setAttribute("onclick", "deleteTarget('board')");
 	}
+	
+	window.onload=navbarLoad(); 
 </script>

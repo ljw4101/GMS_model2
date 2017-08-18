@@ -24,7 +24,7 @@ public class CommonController extends HttpServlet {	//지시전달(메뉴얼대�
 	//doGet, doPost 상관없이 동시에 처리함
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		MemberBean member = new MemberBean();
+		MemberBean bean = new MemberBean();
 		Separator.init(request);
 		
 		System.out.println("CommonController 진입");
@@ -35,7 +35,6 @@ public class CommonController extends HttpServlet {	//지시전달(메뉴얼대�
 			DispatcherServlet.send(request, response);	//2
 			break;
 		case Action.LOGIN:
-			MemberBean bean = new MemberBean();
 			bean.setId(request.getParameter("id"));
 			bean.setPw(request.getParameter("pw"));
 			

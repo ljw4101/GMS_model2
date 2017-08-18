@@ -1,6 +1,7 @@
 package com.gms.web.domain;
 
 import java.io.Serializable;
+import lombok.Getter;
 
 public class GradeBean implements Serializable {
 	private static final long serialVersionUID = 1L;

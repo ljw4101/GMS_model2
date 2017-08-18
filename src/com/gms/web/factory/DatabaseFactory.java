@@ -4,6 +4,7 @@ import com.gms.web.constant.DB;
 import com.gms.web.constant.Vendor;
 import com.gms.web.domain.DatabaseBean;
 
+//factory 패턴: 
 public class DatabaseFactory {
 	public static DatabaseBean createDataBase(Vendor vendor, String username, String password){
 		String driver="", url="";
@@ -33,6 +34,7 @@ public class DatabaseFactory {
 				url = DB.ORACLE_URL;
 				break;
 		}
-		return new DatabaseBean(driver, url, username, password);
+		
+		return new DatabaseBean(driver, url, username, password); //이렇게 해야 다른곳에서 쓸 수 있음
 	}
 }

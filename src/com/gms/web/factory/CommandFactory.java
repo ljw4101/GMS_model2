@@ -14,10 +14,12 @@ public class CommandFactory {
 		case Action.MOVE:
 		case Action.LOGIN:
 		case Action.LOGOUT:
+		case Action.INSERT:
+		case Action.LIST:
 			cmd = new MoveCommand(dir, action, page); //다형성
 			break;
 		default:
-			System.out.println("Commad Fail");
+			System.out.println("CommandFactory Fail");
 			break;
 		}
 		return cmd;

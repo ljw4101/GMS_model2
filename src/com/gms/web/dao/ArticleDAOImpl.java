@@ -81,7 +81,7 @@ public class ArticleDAOImpl implements ArticleDAO{
 				bean = new ArticleBean();
 				bean.setArticleSeq(rs.getInt(DB.BO_SEQ));
 				bean.setId(rs.getString(DB.BO_ID));
-				bean.setTitle(rs.getString(DB.BO_TITLE));
+				bean.setTitle(rs.getString(DB.TITLE));
 				bean.setContent(rs.getString(DB.BO_CONTENT));
 				bean.setHitcount(rs.getInt(DB.BO_HITCOUNT));
 				bean.setRegdate(rs.getString(DB.BO_REGDATE));
@@ -118,7 +118,7 @@ public class ArticleDAOImpl implements ArticleDAO{
 			if(rs.next()){
 				bean.setArticleSeq(rs.getInt(DB.BO_SEQ));
 				bean.setId(rs.getString(DB.BO_ID));
-				bean.setTitle(rs.getString(DB.BO_TITLE));
+				bean.setTitle(rs.getString(DB.TITLE));
 				bean.setContent(rs.getString(DB.BO_CONTENT));
 				bean.setHitcount(rs.getInt(DB.BO_HITCOUNT));
 				bean.setRegdate(rs.getString(DB.BO_REGDATE));
@@ -143,7 +143,7 @@ public class ArticleDAOImpl implements ArticleDAO{
 				bean = new ArticleBean();
 				bean.setArticleSeq(rs.getInt(DB.BO_SEQ));
 				bean.setId(rs.getString(DB.BO_ID));
-				bean.setTitle(rs.getString(DB.BO_TITLE));
+				bean.setTitle(rs.getString(DB.TITLE));
 				bean.setContent(rs.getString(DB.BO_CONTENT));
 				bean.setHitcount(rs.getInt(DB.BO_HITCOUNT));
 				bean.setRegdate(rs.getString(DB.BO_REGDATE));

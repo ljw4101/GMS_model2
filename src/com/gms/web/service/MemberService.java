@@ -9,7 +9,7 @@ public interface MemberService {
 	public String modifyPw(MemberBean member);
 	public String removeMember(String id);
 	//getter
-	public List<?> getMembers();	//목록: MemberBean을 배열로 담음
+	public List<?> getMembers(Object o);	//목록(list): MemberBean을 배열로 담음
 	public String countMembers();
 	public MemberBean findByID(String id);
 	public List<?> findByName(String name);

@@ -114,11 +114,17 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public List<?> selectAll() {
+	public List<?> selectAll(Object o) {
 		List<StudBean> list = new ArrayList<>();	
+		int[] arr = (int[])o;
 		
 		try {
-			ResultSet rs = DatabaseFactory.createDataBase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD).getConnection().prepareStatement(SQL.STUD_LIST).executeQuery();
+			conn = DatabaseFactory.createDataBase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD).getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(SQL.STUD_LIST);
+			pstmt.setString(1, String.valueOf(arr[0]));
+			pstmt.setString(2, String.valueOf(arr[1]));
+			ResultSet rs = pstmt.executeQuery();
+			
 			StudBean bean = null;
 			while(rs.next()){
 				bean = new StudBean(); //new StudBean(); heap에 넣어지는 주소지가 됨
@@ -143,7 +149,7 @@ public class MemberDAOImpl implements MemberDAO{
 	public String count() {
 		String cnt="";
 		try {
-			ResultSet rs = DatabaseFactory.createDataBase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD).getConnection().prepareStatement(SQL.MEMBER_COUNT).executeQuery();
+			ResultSet rs = DatabaseFactory.createDataBase(Vendor.ORACLE, DB.USERNAME, DB.PASSWORD).getConnection().prepareStatement(SQL.STUD_COUNT).executeQuery();
 			if(rs.next()){
 				cnt = rs.getString("cnt");
 			}

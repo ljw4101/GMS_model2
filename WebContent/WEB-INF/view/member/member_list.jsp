@@ -2,6 +2,18 @@
 
 <jsp:include page="../common/common_head.jsp" />
 	<div id="container">
+	
+		<div class="row">
+		  <div class="col-lg-6" style="width:500px; margin: auto">
+		    <div class="input-group">
+		      <input type="text" class="form-control" placeholder="Search for...">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button">Go!</button>
+		      </span>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+		
 		<table id="memlist-tab">
 			<tr>
 				<th>No.</th>
@@ -20,13 +32,17 @@
 				<!-- StudBean과 동일해야 됨 -->
 				<td>${i.num}</td>
 				<td>${i.id}</td>
-				<td>${i.name}</td>
+				<td><a onclick="detailStud('${i.id}')">${i.name}</a></td>
 				<td>${i.ssn}</td>
 				<td>${i.phone}</td>
 				<td>${i.email}</td>
 				<td>${i.title}</td>
 				<td>${i.regdate}</td>
-				<td>수정/삭제</td>
+				<td>
+					<a onclick="updateStud('${i.id}')">수정</a>
+					/
+					<a onclick="deleteStud('${i.id}')">삭제</a>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
@@ -35,11 +51,8 @@
 		  <ul id="page_form" class="pagination">
 		  	<!-- Previous -->
 		  	<c:if test="${requestScope.prevBlock gt 0}">
-			  	<li><a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a></li>
-			    <li>
-			      <a href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
+			  	<li><a onclick="list('member', 'member_list', '1')" href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a></li>
+			    <li><a onclick="list('member', 'member_list', '${requestScope.prevBlock}')"href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
 			    </li>
 		    </c:if>
 			
@@ -50,22 +63,34 @@
 			    		<li class="active"><a href="#">${i.index}</a></li>
 			    	</c:when>
 			    	<c:otherwise>
-			    		<li><a onclick="list('member','member_list',${i.index})">${i.index}</a></li>
+			    		<li><a onclick="list('member','member_list','${i.index}')">${i.index}</a></li>
 			    	</c:otherwise>
 			    </c:choose>
 		    </c:forEach>
 		    
 		    <!-- Next -->
 		    <c:if test="${requestScope.nextBlock le requestScope.theNumberOfPages}">	    
-			    <li>
-			      <a href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			    <li><a href="#"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a></li>
+			    <li><a onclick="list('member', 'member_list', '${requestScope.endPage+1}')" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+			    <li><a onclick="list('member', 'member_list', '${requestScope.theNumberOfPages}')" href="#"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a></li>
 		 	</c:if>
 		  </ul>
 		</nav>
 	</div>
+	
+	<script>
+		function detailStud(id){
+			location.href="${ctx}/member.do?action=detail&page=member_detail&id="+id;
+		}
+	
+		function updateStud(id){
+			alert("수정할 ID: "+id);
+			location.href="${ctx}/member.do?action=update&page=member_update&id="+id;
+		}
+		
+		function deleteStud(id){
+			alert("삭제할 ID: "+id);
+			location.href="${ctx}/member.do?action=delete&page=member_list&id="+id;
+		}
+	</script>
 
 <jsp:include page="../common/footer.jsp" />

@@ -2,8 +2,6 @@ package com.gms.web.factory;
 
 import com.gms.web.command.*;
 import com.gms.web.constant.Action;
-import com.gms.web.service.MemberService;
-import com.gms.web.service.MemberServiceImpl;
 
 //CommonController 관계: 명렁어 생성(메뉴얼 작성자) / MoveCommand 관계: 생산자
 public class CommandFactory {
@@ -14,8 +12,11 @@ public class CommandFactory {
 		case Action.MOVE:
 		case Action.LOGIN:
 		case Action.LOGOUT:
-		case Action.INSERT:
 		case Action.LIST:
+		case Action.DETAIL:
+		case Action.INSERT:
+		case Action.UPDATE:
+		case Action.DELETE:
 			cmd = new MoveCommand(dir, action, page); //다형성
 			break;
 		default:

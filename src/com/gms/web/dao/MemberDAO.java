@@ -11,7 +11,7 @@ public interface MemberDAO {
 	public String update(MemberBean member);	//pw
 	public String delete(String id);			//id
 	//getter
-	public List<?> selectAll();
+	public List<?> selectAll(Object o);
 	public String count();
 	public MemberBean selectByID(String id);
 	public List<?> selectByName(String name);

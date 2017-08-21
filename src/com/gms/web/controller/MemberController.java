@@ -16,6 +16,9 @@ import com.gms.web.constant.Action;
 import com.gms.web.domain.MajorBean;
 import com.gms.web.domain.MemberBean;
 import com.gms.web.domain.StudBean;
+import com.gms.web.proxy.BlockHandler;
+import com.gms.web.proxy.PageHandler;
+import com.gms.web.proxy.PageProxy;
 import com.gms.web.service.MemberService;
 import com.gms.web.service.MemberServiceImpl;
 import com.gms.web.util.DispatcherServlet;
@@ -76,27 +79,34 @@ public class MemberController extends HttpServlet {
 			break;
 		case Action.LIST:
 			System.out.println("===Member List IN===");
-			@SuppressWarnings("unchecked")
-			List<StudBean> mList = (List<StudBean>)service.getMembers(); 
-			System.out.println("List<StudBean>: "+mList);
-			
-			request.setAttribute("pageNumber",request.getParameter("pageNum"));
-			request.setAttribute("prevBlock", "0");
-			request.setAttribute("startPage", "1");
-
-			//5:한 페이지에서 보여주는 회원 수
-			int theNumberOfPages = (mList.size()%5!=0)?mList.size()/5+1:mList.size()/5;
-			request.setAttribute("theNumberOfPages", theNumberOfPages);
-			request.setAttribute("endPage", String.valueOf(theNumberOfPages));
-			
-			System.out.println("DB에서 가져온 MemberList");
-			request.setAttribute("list", mList);
+			PageProxy pxy = new PageProxy(request);
+			pxy.setPageSize(5);
+			pxy.setBlockSize(5);
+			pxy.setTheNumberOfRows(Integer.parseInt(service.countMembers()));
+			pxy.setPageNumber(Integer.parseInt(request.getParameter("pageNumber"))); //선택한 페이지
+			int[] arr = PageHandler.attr(pxy);
+			int[] arr2 = BlockHandler.attr(pxy);
+			pxy.execute(arr2, service.getMembers(arr));
 			
 			DispatcherServlet.send(request, response);
 			break;
 		case Action.UPDATE:
+			System.out.println("=== UPDATE 진입 ===");
+			service.modifyPw(service.findByID(request.getParameter("id")));
+			
+			DispatcherServlet.send(request, response);
 			break;
 		case Action.DELETE:
+			System.out.println("=== DELETE 진입 ===");
+			service.removeMember(request.getParameter("id"));
+			String path = request.getContextPath();
+			response.sendRedirect(path+"/member.do?action=list&page=member_list&pageNumber=1");
+			break;
+		case Action.DETAIL:
+			System.out.println("=== DETAIL 진입 ===");
+			request.setAttribute("stud", service.findByID(request.getParameter("id")));
+			
+			DispatcherServlet.send(request, response);
 			break;
 		default:
 			System.out.println("FAIL...");

@@ -18,5 +18,6 @@ public class SQL {
 	public static final String ARTICLE_COUNT = String.format("select count(*) as cnt from %s", DB.TABLE_BOARD);
 	
 	public static final String MAJOR_INSERT= String.format("insert into %s(%s, %s, %s, %s)values(?, ?, ?, ?)", DB.TABLE_MAJOR, DB.MAJOR_ID, DB.TITLE, DB.MEM_ID, DB.SUBJ_ID);
-	public static final String STUD_LIST = String.format("select %s, %s, %s, %s, %s, %s, %s, %s from ( select rownum rn, v.* from %s v)", DB.NUM, DB.ID, DB.NAME, DB.SSN, DB.PHONE, DB.EMAIL, DB.TITLE, DB.REGDATE, DB.TABLE_STUD);	
+	public static final String STUD_LIST = String.format("select t.%s, t.%s, t.%s, t.%s, t.%s, t.%s, t.%s, t.%s from ( select rownum rnum, s.* from %s s)t where t.rnum between ? and ?", DB.NUM, DB.ID, DB.NAME, DB.SSN, DB.PHONE, DB.EMAIL, DB.TITLE, DB.REGDATE, DB.TABLE_STUD);	
+	public static final String STUD_COUNT = String.format("select count(*) as cnt from %s", DB.TABLE_STUD);
 }

@@ -101,7 +101,7 @@
 	
 	//넘기는 page에 data를 보내야 되므로(DB접속 필요) move(단순 페이지 이동)와 다르다
 	function list(dir, page, pageNum){
-		location.href='${ctx}/'+dir+'.do?action=list&page='+page+'&pageNum='+pageNum;	
+		location.href='${ctx}/'+dir+'.do?action=list&page='+page+'&pageNumber='+pageNum;	
 	}
 	
 	//main.jsp

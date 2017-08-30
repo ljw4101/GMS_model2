@@ -44,35 +44,5 @@
 		<input id="join_no_btn" type="reset" value="취소" class="gms-background-red join-button" />
 		</form>
 	</div>
-	<script>
-		function memberAdd(){
-			var mem_id = document.getElementById('id').value;
-			var mem_pw = document.getElementById("pw").value;
-			var mem_name = document.getElementById("name").value;
-			var mem_birth = document.getElementById("birth").value;
-			
-			if(mem_id === ""){
-				alert('ID를 입력해 주세요');
-				return false;
-			}
-			if(mem_pw === ""){
-				alert('PASSWORD를 입력해 주세요');
-				return false;
-			}
-			if(mem_name === ""){
-				alert('NAME를 입력해 주세요');
-				return false;
-			}
-			if(mem_birth === ""){
-				alert('BIRTH를 입력해 주세요');
-				return false;
-			}
-			
-			var form = document.getElementById("join_form");
-			form.action = "${ctx}/member.do?";
-			form.method = "post";
-			form.submit();
-			return true;
-		}
-	</script>
+
 <jsp:include page="../common/footer.jsp" />

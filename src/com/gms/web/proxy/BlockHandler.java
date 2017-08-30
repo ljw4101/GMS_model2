@@ -2,6 +2,7 @@ package com.gms.web.proxy;
 
 //page를 누르지 않으면 실행되지 않아야 된다.
 //page의 set
+//화면에 뿌려진 후에 작동해야 하므로 디비 갔다온 후
 public class BlockHandler{
 	public static int[] attr(PageProxy pxy){
 		int[] result = new int[6];

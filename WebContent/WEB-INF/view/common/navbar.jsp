@@ -47,7 +47,7 @@
 <script>
 	function logout_action(){
 		var logout = document.getElementById("logout");
-		logout.href = "${ctx}/common.do?action=logout&page=index";
+		logout.href = "${ctx}/common.do?action=logout&page=home";
 		return true;	
 	}
 
@@ -106,13 +106,24 @@
 	
 	//main.jsp
 	function mainLoad(){ 
-		var u1 = document.getElementById("main_ul_stu");
-		var u2 = document.getElementById("main_ul_grade");
-		var u3 = document.getElementById("main_ul_board");
+		var main_ul=[];
+		var u1 = $("#main_ul_stu");
+		var u2 = $("#main_ul_grade");
+		var u3 = $("#main_ul_board");
 		
-		u1.setAttribute("class", "list-group");
-		u2.setAttribute("class", "list-group");
-		u3.setAttribute("class", "list-group");
+		//var u1 = document.getElementById("main_ul_stu");
+		//var u2 = document.getElementById("main_ul_grade");
+		//var u3 = document.getElementById("main_ul_board");
+		
+		
+		u1.addClass("class", "list-group");
+		u2.addClass("class", "list-group");
+		u3.addClass("class", "list-group");
+
+		//u1.setAttribute("class", "list-group");
+		//u2.setAttribute("class", "list-group");
+		//u3.setAttribute("class", "list-group");
+		
 		
 		var ul_stu = u1.children;
 		var ul_grade = u2.children;
@@ -146,6 +157,78 @@
 		ul_board[2].setAttribute("onclick", "moveTo('board', 'move', 'board_detail')");
 		ul_board[3].setAttribute("onclick", "moveTo('board', 'move', 'board_update')");
 		ul_board[4].setAttribute("onclick", "deleteTarget('board')");
+	}
+	
+	function searchName(){
+		var search = document.getElementById("search").value;
+		
+		if(search === ""){
+			alert("검색할 이름을 입력하세요");
+			return false;
+		}
+		location.href="${ctx}/member.do?action=search&page=member_list&search="+search;
+	}
+	
+	function detailStud(id){
+		location.href="${ctx}/member.do?action=detail&page=member_detail&id="+id;
+	}
+
+	function updateStud(id){
+		alert("수정할 ID: "+id);
+		location.href="${ctx}/member.do?action=update&page=member_update&id="+id;
+	}
+	
+	function deleteStud(id){
+		alert("삭제할 ID: "+id);
+		location.href="${ctx}/member.do?action=delete&page=member_list&id="+id;
+	}
+	
+	function memberAdd(){
+		var mem_id = document.getElementById('id').value;
+		var mem_pw = document.getElementById("pw").value;
+		var mem_name = document.getElementById("name").value;
+		var mem_birth = document.getElementById("birth").value;
+		
+		if(mem_id === ""){
+			alert('ID를 입력해 주세요');
+			return false;
+		}
+		if(mem_pw === ""){
+			alert('PASSWORD를 입력해 주세요');
+			return false;
+		}
+		if(mem_name === ""){
+			alert('NAME를 입력해 주세요');
+			return false;
+		}
+		if(mem_birth === ""){
+			alert('BIRTH를 입력해 주세요');
+			return false;
+		}
+		
+		var form = document.getElementById("join_form");
+		form.action = "${ctx}/member.do?";
+		form.method = "post";
+		form.submit();
+		return true;
+	}
+	
+	
+	function test(){
+		document.querySelector('#updateBtn').onclick=studentInfo;
+	}
+
+	function studentInfo(){
+		var id = 'id',
+			id_val='${requestScope.stud.id}',
+			name = 'name',
+			name_val='${requestScope.stud.name}',
+			email = 'email',
+			email_val='${requestScope.stud.email}';
+			
+		sessionStorage.setItem(id, id_val);
+		sessionStorage.setItem(name, name_val);
+		sessionStorage.setItem(email, email_val);
 	}
 	
 	window.onload=navbarLoad(); 

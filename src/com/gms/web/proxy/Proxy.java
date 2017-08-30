@@ -3,7 +3,7 @@ package com.gms.web.proxy;
 import javax.servlet.http.HttpServletRequest;
 import lombok.Getter;
 
-
+//짐꾼 & handler 와 짝꿍
 public abstract class Proxy {
 	@Getter	//setter면 보안이 깨짐
 	HttpServletRequest request; 

@@ -2,13 +2,12 @@
 
 <jsp:include page="../common/common_head.jsp" />
 	<div id="container">
-	
 		<div class="row">
 		  <div class="col-lg-6" style="width:500px; margin: auto">
 		    <div class="input-group">
-		      <input type="text" class="form-control" placeholder="Search for...">
+		      <input id="search" name="search" type="text" class="form-control" placeholder="Search for...">
 		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button">Go!</button>
+		        <button class="btn btn-default" type="button" onclick="searchName()">Go!</button>
 		      </span>
 		    </div><!-- /input-group -->
 		  </div><!-- /.col-lg-6 -->
@@ -77,20 +76,4 @@
 		</nav>
 	</div>
 	
-	<script>
-		function detailStud(id){
-			location.href="${ctx}/member.do?action=detail&page=member_detail&id="+id;
-		}
-	
-		function updateStud(id){
-			alert("수정할 ID: "+id);
-			location.href="${ctx}/member.do?action=update&page=member_update&id="+id;
-		}
-		
-		function deleteStud(id){
-			alert("삭제할 ID: "+id);
-			location.href="${ctx}/member.do?action=delete&page=member_list&id="+id;
-		}
-	</script>
-
 <jsp:include page="../common/footer.jsp" />

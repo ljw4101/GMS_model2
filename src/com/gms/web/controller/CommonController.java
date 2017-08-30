@@ -17,7 +17,7 @@ import com.gms.web.util.DispatcherServlet;
 import com.gms.web.util.Separator;
 
 
-@WebServlet("/common.do")
+@WebServlet({"/home.do", "/common.do"})
 public class CommonController extends HttpServlet {	//지시전달(메뉴얼대로 움직임)
 	private static final long serialVersionUID = 1L;
        
@@ -28,9 +28,9 @@ public class CommonController extends HttpServlet {	//지시전달(메뉴얼대�
 		Separator.init(request);
 		
 		System.out.println("CommonController 진입");
-		System.out.println(request.getParameter(Action.CMD));
+		System.out.println("action: "+Separator.cmd.getAction());
 		
-		switch(request.getParameter(Action.CMD)){
+		switch(Separator.cmd.getAction()){
 		case Action.MOVE:
 			DispatcherServlet.send(request, response);	//2
 			break;

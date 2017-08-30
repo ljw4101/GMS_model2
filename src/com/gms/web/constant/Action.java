@@ -8,6 +8,7 @@ public class Action {
 	
 	public static final String LIST="list";
 	public static final String DETAIL="detail";
+	public static final String SEARCH="search";
 	public static final String INSERT="insert";
 	public static final String UPDATE="update";
 	public static final String DELETE="delete";

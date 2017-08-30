@@ -2,44 +2,41 @@ package com.gms.web.command;
 
 import com.gms.web.constant.Extension;
 import com.gms.web.constant.Path;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Command implements Commandable{
-	protected String dir, action, page, view;	//상속 가능하도록 protected로 설정
-
-	public String getView() {
-		return view;
+	@Getter
+	protected String action, pageNumber, view, column, search;	//상속 가능하도록 protected로 설정
+	@Setter @Getter
+	protected String dir, page, startRow, endRow;
+		
+	public void setColumn(String column){
+		this.column = (column==null)?"none":column;
+		System.out.println("Command/column: "+this.column);
 	}
 	
-	public String getDirectory() {
-		return dir;
+	public void setSearch(String search){
+		this.search = (search==null)?"none":search;
+		System.out.println("Command/search: "+search);
 	}
-
-	public void setDirectory(String directory) {
-		this.dir = directory;
+	
+	public void setPageNumber(String pageNumber){
+		this.pageNumber =  (pageNumber==null)?"1":pageNumber;
+		System.out.println("Command/페이지 번호: "+pageNumber);
 	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
-	public String getPage() {
-		return page;
-	}
-
-	public void setPage(String page) {
-		this.page = page;
+	
+	public void setAction(String action){
+		this.action = (action==null)?"move":action;
+		System.out.println("Command/액션: "+action);
 	}
 	
 	@Override
 	public void process() {	//setView 역할
-		this.view = Path.VIEW + dir + Path.SEPARATOR + page + Extension.JSP;
-		
+		this.view =  (dir.equals("home"))?"/WEB-INF/view/common/home.jsp":Path.VIEW + dir + Path.SEPARATOR + page + Extension.JSP;
+		System.out.println("Command/이동페이지: "+view);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Command [DEST="+dir+"/"+page+".jsp, ACTION="+action+"]";

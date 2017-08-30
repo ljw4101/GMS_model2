@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gms.web.command.Command;
 import com.gms.web.dao.MemberDAOImpl;
 import com.gms.web.domain.MajorBean;
 import com.gms.web.domain.MemberBean;
+import com.gms.web.domain.StudBean;
 import com.gms.web.service.MemberService;
 
 public class MemberServiceImpl implements MemberService{
@@ -33,26 +35,28 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<?> getMembers(Object o) {
-		return MemberDAOImpl.getInstance().selectAll(o);
+	public List<?> getMembers(Command cmd) {
+		return MemberDAOImpl.getInstance().selectAll(cmd);
 	}
 
 	@Override
-	public String countMembers() {
-		return MemberDAOImpl.getInstance().count();
+	public String countMembers(Command cmd) {
+		System.out.println("***count***");
+		return MemberDAOImpl.getInstance().count(cmd);
 	}
 
 	@Override
-	public MemberBean findByID(String id) {
-		MemberBean member = new MemberBean();
-		member = MemberDAOImpl.getInstance().selectByID(id);
+	public StudBean findByID(Command cmd) {
+		StudBean member = new StudBean();
+		member = MemberDAOImpl.getInstance().selectByID(cmd);
 		
 		return member;
 	}
 
 	@Override
-	public List<MemberBean> findByName(String name) {
-		return MemberDAOImpl.getInstance().selectByName(name);
+	public List<?> findByName(Command cmd) {
+		System.out.println("findByName: "+cmd.getSearch());
+		return MemberDAOImpl.getInstance().selectByName(cmd);
 	}
 
 	@Override
@@ -67,9 +71,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public String removeMember(String id) {
+	public String removeMember(Command cmd) {
 		String msg="";
-		String rs = MemberDAOImpl.getInstance().delete(id);
+		String rs = MemberDAOImpl.getInstance().delete(cmd);
 		msg = (rs.equals("1"))?"delete 성공":"delete 실패";
 		
 		return msg;
@@ -77,7 +81,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Map<String, Object> login(MemberBean member) {	
 		Map<String, Object> map = new HashMap<>();
-		MemberBean m = findByID(member.getId());
+		Command cmd = new Command();
+		cmd.setSearch(member.getId());
+		
+		MemberBean m = MemberDAOImpl.getInstance().login(cmd);
 		
 		String page = (m!=null)?(m.getPw().equals(member.getPw()))?"main":"login_fail":"join";
 		

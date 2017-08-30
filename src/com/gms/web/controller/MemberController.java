@@ -11,7 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.gms.web.command.Command;
 import com.gms.web.constant.Action;
 import com.gms.web.domain.MajorBean;
 import com.gms.web.domain.MemberBean;
@@ -34,6 +36,12 @@ public class MemberController extends HttpServlet {
 		Separator.init(request);
 		MemberBean member = new MemberBean();
 		MemberService service = MemberServiceImpl.getInstance(); //singleton
+		Map<?,?> map = new HashMap<>();
+		
+		PageProxy pxy = new PageProxy(request);
+		Command cmd = new Command();
+		pxy.setPageSize(5);
+		pxy.setBlockSize(5);
 		
 		System.out.println("MemberController 진입");
 		System.out.println(request.getParameter(Action.CMD));
@@ -44,7 +52,7 @@ public class MemberController extends HttpServlet {
 			break;
 		case Action.INSERT:
 			System.out.println("=== join 진입 ===");	
-			Map<?,?> map=ParamsIterator.execute(request); //ParamsIterator 호출
+			map=ParamsIterator.execute(request); //ParamsIterator 호출
 			
 			member.setId((String)map.get("id"));
 			member.setPw((String)map.get("pw"));
@@ -72,47 +80,61 @@ public class MemberController extends HttpServlet {
 			tempMap.put("major", list);
 			service.addMember(tempMap);
 			
-			Separator.cmd.setDirectory("common");
+			Separator.cmd.setDir("common");
 			Separator.cmd.process();
 			
 			DispatcherServlet.send(request, response);
 			break;
 		case Action.LIST:
-			System.out.println("===Member List IN===");
-			PageProxy pxy = new PageProxy(request);
-			pxy.setPageSize(5);
-			pxy.setBlockSize(5);
-			pxy.setTheNumberOfRows(Integer.parseInt(service.countMembers()));
+			System.out.println("===Member List IN===");	
+			//cmd.setColumn(String.valueOf(map.get("column")));
+			//cmd.setSearch(String.valueOf(map.get("search")));
+			pxy.setTheNumberOfRows(Integer.parseInt(service.countMembers(cmd)));
 			pxy.setPageNumber(Integer.parseInt(request.getParameter("pageNumber"))); //선택한 페이지
-			int[] arr = PageHandler.attr(pxy);
-			int[] arr2 = BlockHandler.attr(pxy);
-			pxy.execute(arr2, service.getMembers(arr));
+			pxy.execute(BlockHandler.attr(pxy), service.getMembers(PageHandler.attr(pxy)));
+			
+			DispatcherServlet.send(request, response);
+			break;
+		case Action.SEARCH:
+			System.out.println("=== Search IN===");
+			map=ParamsIterator.execute(request);
+			cmd = PageHandler.attr(pxy);
+			cmd.setPageNumber(request.getParameter("pageNumber"));
+			cmd.setColumn("name");
+			cmd.setSearch(String.valueOf(map.get("search")));
+			pxy.setTheNumberOfRows(Integer.parseInt(service.countMembers(cmd))); //검색한 결과의 count가 필요
+			cmd.setStartRow(PageHandler.attr(pxy).getStartRow());
+			cmd.setEndRow(PageHandler.attr(pxy).getEndRow());
+			pxy.setPageNumber(Integer.parseInt(cmd.getPageNumber())); //선택한 페이지
+			pxy.execute(BlockHandler.attr(pxy), service.findByName(cmd));
 			
 			DispatcherServlet.send(request, response);
 			break;
 		case Action.UPDATE:
 			System.out.println("=== UPDATE 진입 ===");
-			service.modifyPw(service.findByID(request.getParameter("id")));
+			cmd.setSearch(request.getParameter("id"));
+			//service.modifyPw(service.findByID(cmd));
 			
 			DispatcherServlet.send(request, response);
 			break;
 		case Action.DELETE:
 			System.out.println("=== DELETE 진입 ===");
-			service.removeMember(request.getParameter("id"));
+			cmd.setSearch(request.getParameter("id"));
+			service.removeMember(cmd);
+			
 			String path = request.getContextPath();
 			response.sendRedirect(path+"/member.do?action=list&page=member_list&pageNumber=1");
 			break;
 		case Action.DETAIL:
 			System.out.println("=== DETAIL 진입 ===");
-			request.setAttribute("stud", service.findByID(request.getParameter("id")));
+			cmd.setSearch(request.getParameter("id"));
+			request.setAttribute("stud", service.findByID(cmd));
 			
 			DispatcherServlet.send(request, response);
 			break;
 		default:
-			System.out.println("FAIL...");
+			System.out.println("MemberController FAIL...");
 			break;
 		}
 	}
-
-
 }

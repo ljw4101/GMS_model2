@@ -8,12 +8,13 @@ public class Separator {
 	public static Command cmd = new Command();
 	
 	public static void init(HttpServletRequest request){
-		String action = request.getParameter("action");
-		String page = request.getParameter("page");
-		
 		String servletPath = request.getServletPath(); //request가 건너온 경로
-		String dir = servletPath.substring(1, servletPath.indexOf("."));
 		
-		cmd = CommandFactory.createCommand(dir, action, page);
+		cmd = CommandFactory.createCommand(servletPath.substring(1, servletPath.indexOf(".")), 
+				request.getParameter("action"), 
+				request.getParameter("page"),
+				request.getParameter("pageNumber"),
+				request.getParameter("column"),
+				request.getParameter("search"));
 	}
 }
